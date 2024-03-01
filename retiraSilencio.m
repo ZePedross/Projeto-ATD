@@ -1,13 +1,9 @@
-function sinalS = retiraSilencio(sinal, Freq)
-       
-    amostras = buffer(sinal, 100);
-    energia = sum(amostras.^2, 1);
-    media_e = mean(energia);
-    limiar = (media_e) * 0.13 ;
-    indice_inicio = find(energia >= limiar, 1);
-    amostrasU = amostras(:,indice_inicio:end);
+function sinalS = retiraSilencio(sinal)
 
-    sinalS = amostrasU(:);
-  
-        
+    energia = (sinal.^2);
+    limiar = 0.005 * max(energia);
+    primeiro_t = find(energia > limiar,1, 'first'); 
+    ulimo_t = find(energia > limiar,1, 'last');
+    sinalS = sinal(primeiro_t:ulimo_t);
+
 end
